@@ -24,6 +24,7 @@ import { BookEntity } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BuyBookDto } from './dto/buy-book.dto';
 import { DomainException } from './exceptions/domain.exception';
+import { RatingBookDto } from './dto/rating-book.dto';
 
 @Controller('books')
 export class BooksController {
@@ -96,6 +97,18 @@ export class BooksController {
     }
 
     book.amount = book.amount - body.amount;
+  }
+
+  @Put(':id/rating')
+  @HttpCode(204)
+  addRating(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: RatingBookDto) {
+    const book = this.findBookByPredicate((book) => book.id === id);
+
+    if (book.rating == 0) {
+      book.rating = body.rating;
+    } else {
+      book.rating = (book.rating + body.rating) / 2
+    }
   }
 
   private findBookByPredicate(predicate: (book: BookEntity) => boolean) {
