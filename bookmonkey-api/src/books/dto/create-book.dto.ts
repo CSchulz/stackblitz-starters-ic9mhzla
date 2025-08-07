@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MinLength, IsNotEmpty, ArrayMinSize } from 'class-validator';
+import { MinLength, IsNotEmpty, ArrayMinSize, Validate } from 'class-validator';
+import { AuthorValidValidator } from './validators/author-valid.validator';
 
 export class CreateBookDto {
   @ApiProperty()
@@ -10,5 +11,6 @@ export class CreateBookDto {
   public isbn: string;
   @ApiProperty()
   @ArrayMinSize(1)
+  @Validate(AuthorValidValidator)
   public authors: string[];
 }

@@ -29,7 +29,6 @@ import { DomainException } from './exceptions/domain.exception';
 import { RatingBookDto } from './dto/rating-book.dto';
 import { BooksService } from './books.service';
 import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
-import { AuthorValidPipe } from './dto/validators/author-valid.pipe';
 
 @Controller('books')
 export class BooksController {
@@ -67,7 +66,6 @@ export class BooksController {
   }
 
   @Post()
-  @UsePipes(new AuthorValidPipe())
   @ApiCreatedResponse({ description: 'Book created', type: BookEntity })
   createBook(@Body() createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
