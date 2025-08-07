@@ -24,11 +24,9 @@ import { BookEntity } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BuyBookDto } from './dto/buy-book.dto';
 import { DomainException } from './exceptions/domain.exception';
-import { BooksService } from './books.service';
 
 @Controller('books')
 export class BooksController {
-  constructor(protected bookService: BooksService) {}
 
   private books: BookEntity[] = [
     new BookEntity({
