@@ -18,6 +18,7 @@ import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiParam,
   ApiResponse,
 } from '@nestjs/swagger';
 import { BookEntity } from './entities/book.entity';
@@ -26,6 +27,7 @@ import { BuyBookDto } from './dto/buy-book.dto';
 import { DomainException } from './exceptions/domain.exception';
 import { RatingBookDto } from './dto/rating-book.dto';
 import { BooksService } from './books.service';
+import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
 
 @Controller('books')
 export class BooksController {
@@ -46,9 +48,20 @@ export class BooksController {
 
   @Get(':id')
   @ApiOkResponse({ description: 'OK', type: BookEntity })
+  @ApiParam({
+    name: 'id',
+    example: '55f8b7f6-8a9b-40d2-abc4-3c403025a694'
+  })
   @ApiNotFoundResponse()
   findById(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.booksService.findOne(id);
+    try {
+      return this.booksService.findOne(id);
+    } catch (e) {
+      if (e instanceof EntityNotFoundException) {
+        throw new NotFoundException("Not found with id " + id, {cause: e});
+      }
+      throw e;
+    }
   }
 
   @Post()

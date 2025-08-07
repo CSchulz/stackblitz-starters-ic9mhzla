@@ -5,6 +5,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { BuyBookDto } from './dto/buy-book.dto';
 import { RatingBookDto } from './dto/rating-book.dto';
 import { DomainException } from './exceptions/domain.exception';
+import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
 
 @Injectable()
 export class BooksService {
@@ -80,7 +81,7 @@ export class BooksService {
       const book = this.books.find((book) => predicate(book));
   
       if (!book) {
-        throw new NotFoundException();
+        throw new EntityNotFoundException(BookEntity.name, "");
       } else {
         return book;
       }
