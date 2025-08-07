@@ -55,14 +55,7 @@ export class BooksController {
   })
   @ApiNotFoundResponse()
   findById(@Param('id', new ParseUUIDPipe()) id: string) {
-    try {
-      return this.booksService.findOne(id);
-    } catch (e) {
-      if (e instanceof EntityNotFoundException) {
-        throw new NotFoundException("Not found with id " + id, {cause: e});
-      }
-      throw e;
-    }
+    return this.booksService.findOne(id);
   }
 
   @Post()

@@ -6,6 +6,7 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { EntityNotFoundExceptionFilter } from './books/exceptions/entity-not-found-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +22,7 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new EntityNotFoundExceptionFilter());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
