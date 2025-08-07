@@ -6,6 +6,7 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { DomainExceptionFilter } from './books/exceptions/domain-exception.filter';
 import { EntityNotFoundExceptionFilter } from './books/exceptions/entity-not-found-exception.filter';
 
 async function bootstrap() {
@@ -22,7 +23,8 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new EntityNotFoundExceptionFilter());
+  // app.useGlobalFilters(new EntityNotFoundExceptionFilter());
+  app.useGlobalFilters(new DomainExceptionFilter());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
