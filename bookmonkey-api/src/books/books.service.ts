@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { BookEntity } from './entities/book.entity';
 import { randomUUID } from 'crypto';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -6,12 +6,9 @@ import { BuyBookDto } from './dto/buy-book.dto';
 import { RatingBookDto } from './dto/rating-book.dto';
 import { DomainException } from './exceptions/domain.exception';
 import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
-import { EnvVariablesService } from 'src/configuration/env-variables.service';
 
 @Injectable()
 export class BooksService {
-  constructor(protected envService: EnvVariablesService) {}
-
   private books: BookEntity[] = [
     new BookEntity({
       id: randomUUID(),
@@ -416,7 +413,6 @@ export class BooksService {
     ];
 
     findAll() {
-        console.log(this.envService.get('database_server'))
         return this.books;
     }
 
