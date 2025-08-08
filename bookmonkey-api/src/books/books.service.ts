@@ -1,473 +1,72 @@
 import { Injectable } from '@nestjs/common';
 import { BookEntity } from './entities/book.entity';
-import { randomUUID } from 'crypto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BuyBookDto } from './dto/buy-book.dto';
 import { RatingBookDto } from './dto/rating-book.dto';
 import { DomainException } from './exceptions/domain.exception';
 import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindOptionsWhere, FindOptionsWhereProperty } from 'typeorm/find-options/FindOptionsWhere';
 
 @Injectable()
 export class BooksService {
-  private books: BookEntity[] = [
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    new BookEntity({
-      id: randomUUID(),
-      isbn: '978-0061976209',
-      title: 'The Whale',
-      authors: ['Samuel D. Hunter'],
-      price: 16.99,
-      amount: 1000,
-    }),
-    ];
+  constructor(
+    @InjectRepository(BookEntity)
+    protected booksRepository: Repository<BookEntity>,
+  ) {}
 
-    findAll() {
-        return this.books;
+  findAll() {
+    return this.booksRepository.find();
+  }
+
+  findBookByQueryParams(isbn: string) {
+    return this.findBookByPredicate({isbn});
+  }
+
+  findOne(id: string) {
+    return this.findBookByPredicate({id});
+  }
+
+  create(createBookDto: CreateBookDto) {
+    return this.booksRepository.save({
+      // define the default values which are not part of the CreateBookDto, yet
+      amount: 0,
+      price: 0,
+      rating: 0,
+      ...createBookDto,
+    });
+  }
+
+  async buy(id: string, body: BuyBookDto) {
+    const book = await this.findBookByPredicate({id});
+
+    if (book.amount - body.amount < 0) {
+      throw new DomainException(
+        `Order cancelled: ${body.amount} copys of "${book.title}" have been ordered, but only ${book.amount} are available. More will be available, soon!`,
+      );
     }
 
-    findBookByQueryParams(isbn: string) {
-        return this.findBookByPredicate((book) => book.isbn === isbn)
+    book.amount = book.amount - body.amount;
+
+    this.booksRepository.save(book);
+  }
+
+  async addRating(id: string, body: RatingBookDto) {
+    const book = await this.findBookByPredicate({id});
+
+    if (book.rating == 0) {
+      book.rating = body.rating;
+    } else {
+      book.rating = (book.rating + body.rating) / 2;
     }
 
-    findOne(id: string) {
-        return this.findBookByPredicate((book) => book.id === id)
-    }
+    this.booksRepository.save(book);
+  }
 
-    create(createBookDto: CreateBookDto) {
-        const newBook = new BookEntity({
-            id: randomUUID(),
-            title: createBookDto.title,
-            isbn: createBookDto.isbn,
-            authors: createBookDto.authors,
-            amount: 0,
-            price: 0,
-          });
-      
-          this.books.push(newBook);
-      
-          return newBook;
-    }
-
-    buy(id: string, body: BuyBookDto) {
-        const book = this.findBookByPredicate((book) => book.id === id);
-
-        if (book.amount - body.amount < 0) {
-        throw new DomainException(
-            `Order cancelled: ${body.amount} copys of "${book.title}" have been ordered, but only ${book.amount} are available. More will be available, soon!`
-        );
-        }
-
-        book.amount = book.amount - body.amount;
-    }
-
-    addRating(id: string, body: RatingBookDto) {
-        const book = this.findBookByPredicate((book) => book.id === id);
-
-        if (book.rating == 0) {
-        book.rating = body.rating;
-        } else {
-        book.rating = (book.rating + body.rating) / 2
-        }
-    }
-
-    private findBookByPredicate(predicate: (book: BookEntity) => boolean) {
-      const book = this.books.find((book) => predicate(book));
-  
-      if (!book) {
-        throw new EntityNotFoundException(BookEntity.name, "");
-      } else {
-        return book;
-      }
-    }
+  private findBookByPredicate(predicate: FindOptionsWhere<Omit<BookEntity, 'id'>> & FindOptionsWhereProperty<{id: any}>) {
+    return this.booksRepository.findOneByOrFail(predicate).catch(() => {
+      throw new EntityNotFoundException(BookEntity.name, predicate);
+    });
+  }
 }

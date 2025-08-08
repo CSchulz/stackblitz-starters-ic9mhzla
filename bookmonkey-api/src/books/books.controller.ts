@@ -28,8 +28,6 @@ import { BuyBookDto } from './dto/buy-book.dto';
 import { DomainException } from './exceptions/domain.exception';
 import { RatingBookDto } from './dto/rating-book.dto';
 import { BooksService } from './books.service';
-import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
-import { invalidUuidExceptionFactory } from './exceptions/invalid-uuid.exception';
 
 @Controller('books')
 export class BooksController {
@@ -55,7 +53,7 @@ export class BooksController {
     example: '55f8b7f6-8a9b-40d2-abc4-3c403025a694'
   })
   @ApiNotFoundResponse()
-  findById(@Param('id', new ParseUUIDPipe({exceptionFactory: invalidUuidExceptionFactory})) id: string) {
+  findById(@Param('id') id: string) {
     return this.booksService.findOne(id);
   }
 
@@ -67,13 +65,13 @@ export class BooksController {
 
   @Put(':id/buy')
   @HttpCode(204)
-  buy(@Param('id', new ParseUUIDPipe({exceptionFactory: invalidUuidExceptionFactory})) id: string, @Body() body: BuyBookDto) {
-    this.booksService.buy(id, body);
+  async buy(@Param('id') id: string, @Body() body: BuyBookDto) {
+    await this.booksService.buy(id, body);
   }
 
   @Put(':id/rating')
   @HttpCode(204)
-  addRating(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: RatingBookDto) {
+  addRating(@Param('id') id: string, @Body() body: RatingBookDto) {
     this.booksService.addRating(id, body);
   }
 }
