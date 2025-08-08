@@ -39,8 +39,8 @@ export class BookEntity {
   // public thumbnail: string | undefined;
   
   @ApiProperty()
-  @Column({ type: 'real' })
-  public rating: number;
+  @OneToMany(() => BookRatingEntity, bookRating => bookRating.book)
+  ratings: BookRatingEntity[];
 
   constructor(props?: EntityProperties<Omit<BookEntity, 'rating'>>) {
     if (!props) return;

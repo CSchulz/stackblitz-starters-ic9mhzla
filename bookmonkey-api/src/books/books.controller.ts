@@ -68,10 +68,4 @@ export class BooksController {
   async buy(@Param('id') id: string, @Body() body: BuyBookDto) {
     await this.booksService.buy(id, body);
   }
-
-  @Put(':id/rating')
-  @HttpCode(204)
-  addRating(@Param('id') id: string, @Body() body: RatingBookDto) {
-    this.booksService.addRating(id, body);
-  }
 }

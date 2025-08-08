@@ -8,6 +8,7 @@ import { EnvVariablesService } from './configuration/env-variables.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthzModule } from './healthz/healthz.module';
 import { BookEntity } from './books/entities/book.entity';
+import { BookRatingsModule } from './book-ratings/book-ratings.module';
 
 @Module({
   imports: [BooksModule, CorrelationIdModule, EnvVariablesModule,
@@ -25,7 +26,8 @@ import { BookEntity } from './books/entities/book.entity';
       }),
       inject: [EnvVariablesService],
     }),
-    HealthzModule
+    HealthzModule,
+    BookRatingsModule
   ],
   controllers: [AppController],
   providers: [AppService],

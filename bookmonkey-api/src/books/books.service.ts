@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { BookEntity } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BuyBookDto } from './dto/buy-book.dto';
-import { RatingBookDto } from './dto/rating-book.dto';
 import { DomainException } from './exceptions/domain.exception';
 import { EntityNotFoundException } from './exceptions/entity-not-found.exception';
 import { Repository } from 'typeorm';
@@ -17,7 +16,7 @@ export class BooksService {
   ) {}
 
   findAll() {
-    return this.booksRepository.find();
+    return this.booksRepository.find({ relations: { ratings: true } });
   }
 
   findBookByQueryParams(isbn: string) {
@@ -48,18 +47,6 @@ export class BooksService {
     }
 
     book.amount = book.amount - body.amount;
-
-    this.booksRepository.save(book);
-  }
-
-  async addRating(id: string, body: RatingBookDto) {
-    const book = await this.findBookByPredicate({id});
-
-    if (book.rating == 0) {
-      book.rating = body.rating;
-    } else {
-      book.rating = (book.rating + body.rating) / 2;
-    }
 
     this.booksRepository.save(book);
   }
