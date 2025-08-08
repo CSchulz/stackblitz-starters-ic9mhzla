@@ -23,6 +23,7 @@
     "@fastify/compress": "^8.1.0",
     "@fastify/static": "^8.2.0",
     "@nestjs/common": "^11.1.0",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.1.0",
     "@nestjs/platform-express": "^11.1.0",
     "@nestjs/platform-fastify": "^11.1.6",
@@ -32,7 +33,8 @@
     "class-validator": "^0.14.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^4.0.15"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

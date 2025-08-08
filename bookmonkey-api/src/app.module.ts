@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BooksModule } from './books/books.module';
 import { CorrelationIdModule } from './correlation-id/correlation-id.module';
+import { EnvVariablesModule } from './configuration/env-variables.module';
 
 @Module({
-  imports: [BooksModule, CorrelationIdModule],
+  imports: [BooksModule, CorrelationIdModule, EnvVariablesModule],
   controllers: [AppController],
   providers: [AppService],
 })
