@@ -9,7 +9,7 @@ import { EntityNotFoundException } from './exceptions/entity-not-found.exception
 
 @Injectable()
 export class BooksService {
-    private books: BookEntity[] = [
+  private books: BookEntity[] = [
       new BookEntity({
         id: randomUUID(),
         isbn: '978-0061976209',
